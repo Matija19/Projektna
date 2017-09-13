@@ -4,6 +4,7 @@ class Plosca:
         self.sirina = sirina
         self.krogci_prvi_igralec = []
         self.krogci_drugi_igralec = []
+ 
 
 #Plošča je v redu
     def __repr__(self):
@@ -51,7 +52,7 @@ class Plosca:
 
 
 
-    def pregled(self, element, seznam):
+    def stiri_v_vrsto(self, element, seznam):
         vrstica, stolpec = element
         if element not in seznam:
             seznam.append(element)
@@ -121,12 +122,17 @@ class Plosca:
     def konec_igre(self):
         if len(self.krogci_prvi_igralec + self.krogci_drugi_igralec) == self.sirina * self.visina:
             return 1
-        elif self.pregled(self.vrni()[len(self.vrni()) - 1], self.vrni()) == True:
+        elif self.stiri_v_vrsto(self.vrni()[len(self.vrni()) - 1], self.vrni()) == True:
             return 0
         else:
             return -1
-        
+
 
 
 plosca = Plosca()
+
+        
+
+
+
 
