@@ -3,7 +3,7 @@ import model
 
 class Štiri_v_vrsto:
     def __init__(self, okno):
-        self.plosca = model.Plosca(8,8)
+        self.plosca = model.Plosca(10,10)
 
         self.obvestilo = tk.Label(okno, text = 'Na potezi je prvi igralec!')
         self.obvestilo.grid(row = 0, column = 0)
@@ -16,11 +16,11 @@ class Štiri_v_vrsto:
                 def pritisni_gumb(stolpec = stolpec):
                     self.spusti(stolpec)
                 if vrstica == 0:
-                    gumb = tk.Button(prikaz_plosce, text = '', height = 1, width = 1, command = pritisni_gumb)
+                    gumb = tk.Button(prikaz_plosce, text = '', height = 4, width = 8, command = pritisni_gumb)
                     gumb.grid(row = vrstica, column = stolpec)
                     vrstica_gumbov.append(gumb)
                 else:
-                    gumb = tk.Button(prikaz_plosce, text = '', height = 1, width = 1, command = pritisni_gumb,state = 'disabled')
+                    gumb = tk.Button(prikaz_plosce, text = '', height = 4, width = 8, command = pritisni_gumb,state = 'disabled')
                     gumb.grid(row = vrstica, column = stolpec)
                     vrstica_gumbov.append(gumb)
             self.gumbi.append(vrstica_gumbov)
@@ -33,6 +33,8 @@ class Štiri_v_vrsto:
     def spusti(self, stolpec):
         vrstica1 = self.plosca.spusti_krogec(stolpec) + 1
         vrednost = self.plosca.konec_igre()
+        poteza = self.plosca.igralec_na_potezi()
+        zmaga = self.plosca.zmagovalec()
         if vrstica1 <= 1:
             self.gumbi[0][stolpec].config(state = 'disabled')
             self.gumbi[vrstica1][stolpec].config(text = self.plosca.oznaka())
@@ -40,11 +42,11 @@ class Štiri_v_vrsto:
             self.gumbi[vrstica1][stolpec].config(text = self.plosca.oznaka())
         #PREVERIMO, ČE JE KONCE IGRE
         if vrednost == 0:
-            self.obvestilo.config(text = 'Čestitke, zmagal je {}!'.format('prvi igralec'))
+            self.obvestilo.config(text = 'Čestitke, zmagal je {}!'.format(zmaga))
         elif vrednost == 1:
             self.obvestilo.config(text = 'Rezultat je neodločen.')
         else:
-            self.obvestilo.config(text = 'Na potezi je {}!'.format('drugi igralec'))
+            self.obvestilo.config(text = 'Na potezi je {}!'.format(poteza))
         
             
         
