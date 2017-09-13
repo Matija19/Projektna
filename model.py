@@ -55,71 +55,93 @@ class Plosca:
             return '0'
 #v grafičnem vmesniku bom po vsakem pritisku na gumb klical funkcijo znacka, da zamenjam igralca
 
-#MOJ ŠTIRI V VRSTO ŠE RABI POPRAVKE
-    def stiri_v_vrsto(self):
-        vrstice = []
-        stolpci = []
+#ŠTIRI V VRSTO DELA PRAVILNO
+    def stiri_v_vrsto(self, seznam):
         naj = 0
         naj2 = 0
-        if len(self.krogci_prvi_igralec) < 4:
+        a = 0
+        b = 0
+        posebna_razlika = 0
+        vrstice = []
+        stolpci = []
+        razlika = 0   
+        dolzina = len(seznam)
+        if len(seznam) < 4:
             return False
         else:
-            for krogec in range(len(self.krogci_prvi_igralec[3:])):
-                vrstica1, stolpec1 = self.krogci_prvi_igralec[krogec]
-                vrstice.append(vrstica1)
-                stolpci.append(stolpec1)
-                for i in range(len(self.krogci_prvi_igralec[:krogec]) -1):
-                    vrstica2, stolpec2 = self.krogci_prvi_igralec[i]
-                    vrstice.append(vrstica2)
-                    stolpci.append(stolpec2)
-                    for j in range(len(self.krogci_prvi_igralec[:i]) - 1):
-                        vrstica3, stolpec3 = self.krogci_prvi_igralec[j]
-                        vrstice.append(vrstica3)
-                        stolpci.append(stolpec3)                                            
-                        for k in range(len(self.krogci_prvi_igralec[:j]) - 1):
-                            vrstica4, stolpec4 = self.krogci_prvi_igralec[k]
-                            vrstice.append(vrstica4)
-                            stolpci.append(stolpec4)                                          
-            if vrstica1 == vrstica2 and vrstica2 == vrstica3 and vrstica3 == vrstica4:
-                for i in stolpci:
-                    for j in stolpci:
-                        if max(i - j) <= 4:
-                            return True
+            for krogec in range(dolzina):
+                vrstica1, stolpec1 = seznam[krogec]
+                vrstice.append(str(vrstica1))
+                stolpci.append(str(stolpec1))
+                for i in range(dolzina):
+                    if i == krogec:
+                        continue
+                    else:
+                        vrstica2, stolpec2 = seznam[i]
+                        vrstice.append(str(vrstica2))
+                        stolpci.append(str(stolpec2))
+                    for j in range(dolzina):
+                        if j == krogec or j == i:
+                            continue
                         else:
-                            return False
-            if stolpec1 == stolpec2 and stolpec2 == stolpec3 and stolpec3 == stolpec4:
-                for i in vrstice:
-                    for j in vrstice:
-                        if max(i - j) <= 4:
-                            return True
-                        else:
-                            return False                                    
-             
-            else:
-                for i in range(3):
-                    for j in range(len(vrstice[i]) - 1):
-                        if vrstica[i] != vrstica[j] and stolpec[i] != stolpec[j]:
-                            naj = max(abs(vrstica[i] - vrstica[j]))
-                            naj2 = max(abs(stolpec[i] - vrstica[j]))
-                            if naj == 3 and naj2 == 3:
-                                return True
-                        return False
-                 
-                                                                      
-    
+                            vrstica3, stolpec3 = seznam[j]
+                            vrstice.append(str(vrstica3))
+                            stolpci.append(str(stolpec3))
+                        for k in range(dolzina):
+                            if k == krogec or k == j or k == i:
+                                continue
+                            else:
+                                vrstica4, stolpec4 = seznam[k]
+                                vrstice.append(str(vrstica4))
+                                stolpci.append(str(stolpec4))
+                                if vrstica1 == vrstica2 and vrstica2 == vrstica3 and vrstica3 == vrstica4:
+                                    for p in stolpci:
+                                        for m in stolpci:
+                                            razlika = max(razlika, abs(int(p) - int(m)))
+                                    if razlika == 3:
+                                        return True
+                                elif stolpec1 == stolpec2 and stolpec2 == stolpec3 and stolpec3 == stolpec4:
+                                    for p in vrstice:
+                                        for m in vrstice:
+                                            razlika = max(razlika, abs(int(p) - int(m)))
+                                    if razlika == 3:
+                                        return True                                             
+                                else:
+                                    for p in range(4):
+                                        for m in range(4):
+                                            if  p == m:
+                                                continue
+                                            else:
+                                                naj = max(razlika, abs(int(vrstice[p]) - int(vrstice[m])))
+                                                naj2 = max(razlika, abs(int(stolpci[p]) - int(stolpci[m])))
+                                                a = int(stolpci[p]) - int(stolpci[m])
+                                                b = int(vrstice[p]) - int(vrstice[m])
+                                                posebna_razlika = max(posebna_razlika, abs(a-b))
+                                                if naj == 3 and naj2 == 3 and posebna_razlika == 0:
+                                                        return True                                     
 
-                                                           
-                
- 
-                
-            
-        
-        
+            return False
+
+
+    def igralec_na_potezi(self):
+        if len(self.krogci_prvi_igralec) <= len(self.krogci_drugi_igralec):
+            return 'prvi igralec'
+        else:
+            return 'drugi igralec'
+
+    def zmagovalec(self):
+        if len(self.krogci_prvi_igralec) <= len(self.krogci_drugi_igralec):
+            return 'drugi igralec'
+        else:
+            return 'prvi igralec'
+
+                 
+                                                                             
 #TO JE V REDU
     def konec_igre(self):
         if len(self.krogci_prvi_igralec + self.krogci_drugi_igralec) == self.sirina * self.visina:
             return 1
-        elif self.stiri_v_vrsto == True:
+        elif self.stiri_v_vrsto(self.krogci_prvi_igralec) == True:
             return 0
         else:
             return -1
