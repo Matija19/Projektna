@@ -1,0 +1,55 @@
+import tkinter as tk
+import model
+
+class Štiri_v_vrsto:
+    def __init__(self, okno):
+        self.plosca = model.Plosca(8,8)
+
+        self.obvestilo = tk.Label(okno, text = 'Na potezi je prvi igralec!')
+        self.obvestilo.grid(row = 0, column = 0)
+
+        prikaz_plosce = tk.Frame(okno)
+        self.gumbi = []
+        for vrstica in range(self.plosca.visina + 1):
+            vrstica_gumbov = []
+            for stolpec in range(self.plosca.sirina):
+                def pritisni_gumb(stolpec = stolpec):
+                    self.spusti(stolpec)
+                if vrstica == 0:
+                    gumb = tk.Button(prikaz_plosce, text = '', height = 1, width = 1, command = pritisni_gumb)
+                    gumb.grid(row = vrstica, column = stolpec)
+                    vrstica_gumbov.append(gumb)
+                else:
+                    gumb = tk.Button(prikaz_plosce, text = '', height = 1, width = 1, command = pritisni_gumb,state = 'disabled')
+                    gumb.grid(row = vrstica, column = stolpec)
+                    vrstica_gumbov.append(gumb)
+            self.gumbi.append(vrstica_gumbov)
+        prikaz_plosce.grid(row = 1, column = 0, columnspan = 2)
+        gumb = tk.Button(prikaz_plosce, text = '', height = 1, width = 1)
+        
+        
+
+
+    def spusti(self, stolpec):
+        vrstica1 = self.plosca.spusti_krogec(stolpec) + 1
+        vrednost = self.plosca.konec_igre()
+        if vrstica1 <= 1:
+            self.gumbi[0][stolpec].config(state = 'disabled')
+            self.gumbi[vrstica1][stolpec].config(text = self.plosca.oznaka())
+        else:
+            self.gumbi[vrstica1][stolpec].config(text = self.plosca.oznaka())
+        #PREVERIMO, ČE JE KONCE IGRE
+        if vrednost == 0:
+            self.obvestilo.config(text = 'Čestitke, zmagal je {}!'.format('prvi igralec'))
+        elif vrednost == 1:
+            self.obvestilo.config(text = 'Rezultat je neodločen.')
+        else:
+            self.obvestilo.config(text = 'Na potezi je {}!'.format('drugi igralec'))
+        
+            
+        
+       
+
+okno = tk.Tk()
+plosca = Štiri_v_vrsto(okno)
+okno.mainloop()
