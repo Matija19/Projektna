@@ -5,7 +5,8 @@ class Štiri_v_vrsto:
     def __init__(self, okno):
         self.plosca = model.Plosca(10,10)
 
-        self.obvestilo = tk.Label(okno, text = 'Na potezi je prvi igralec!',font =('Courier',20))
+        self.obvestilo = tk.Label(okno, text = 'Na potezi je prvi igralec!'
+                                  ,font =('Courier',20))
         self.obvestilo.grid(row = 0, column = 0,)
 
         prikaz_plosce = tk.Frame(okno)
@@ -16,11 +17,15 @@ class Štiri_v_vrsto:
                 def pritisni_gumb(stolpec = stolpec):
                     self.spusti(stolpec)
                 if vrstica == 0:
-                    gumb = tk.Button(prikaz_plosce, text = 'Za spust \n tukaj \n pritisni \n name!', height = 4, width = 8, command = pritisni_gumb)
+                    gumb = tk.Button(prikaz_plosce,
+                                     text = 'Za spust \n tukaj\n pritisni \n name!',
+                                     height = 4, width = 8, command = pritisni_gumb)
                     gumb.grid(row = vrstica, column = stolpec)
                     vrstica_gumbov.append(gumb)
                 else:
-                    gumb = tk.Button(prikaz_plosce, text = '', height = 4, width = 8, command = pritisni_gumb,state = 'disabled')
+                    gumb = tk.Button(prikaz_plosce, text = '',
+                                     height = 4, width = 8,
+                                     command = pritisni_gumb,state = 'disabled')
                     gumb.grid(row = vrstica, column = stolpec)
                     vrstica_gumbov.append(gumb)
             self.gumbi.append(vrstica_gumbov)
@@ -37,13 +42,15 @@ class Štiri_v_vrsto:
         zmaga = self.plosca.zmagovalec()
         barva = self.plosca.oznaka()
         if vrstica1 <= 1:
-            self.gumbi[0][stolpec].config(text = 'Ta stolpec \n je poln.', state = 'disabled')
+            self.gumbi[0][stolpec].config(text = 'Ta stolpec \n je poln.',
+                                          state = 'disabled')
             self.gumbi[vrstica1][stolpec].config(bg = self.plosca.oznaka())
         else:
             self.gumbi[vrstica1][stolpec].config(bg = self.plosca.oznaka())
         #PREVERIMO, ČE JE KONEC IGRE
         if vrednost == 0:
-            self.obvestilo.config(text = 'Čestitke, zmagal je {}!'.format(zmaga),bg = 'green')
+            self.obvestilo.config(text = 'Čestitke, zmagal je {}!'.format(zmaga),
+                                  bg = 'green')
             for stolpec in range(self.plosca.visina):
                 self.gumbi[0][stolpec].config(state = 'disabled')
         elif vrednost == 1:
