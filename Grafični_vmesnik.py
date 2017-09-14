@@ -16,7 +16,7 @@ class Štiri_v_vrsto:
                 def pritisni_gumb(stolpec = stolpec):
                     self.spusti(stolpec)
                 if vrstica == 0:
-                    gumb = tk.Button(prikaz_plosce, text = '', height = 4, width = 8, command = pritisni_gumb)
+                    gumb = tk.Button(prikaz_plosce, text = 'Za spust \n tukaj \n pritisni \n name!', height = 4, width = 8, command = pritisni_gumb)
                     gumb.grid(row = vrstica, column = stolpec)
                     vrstica_gumbov.append(gumb)
                 else:
@@ -37,7 +37,7 @@ class Štiri_v_vrsto:
         zmaga = self.plosca.zmagovalec()
         barva = self.plosca.oznaka()
         if vrstica1 <= 1:
-            self.gumbi[0][stolpec].config(state = 'disabled')
+            self.gumbi[0][stolpec].config(text = 'Ta stolpec \n je poln.', state = 'disabled')
             self.gumbi[vrstica1][stolpec].config(bg = self.plosca.oznaka())
         else:
             self.gumbi[vrstica1][stolpec].config(bg = self.plosca.oznaka())
