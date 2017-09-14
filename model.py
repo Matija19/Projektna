@@ -8,12 +8,14 @@ class Plosca:
 
 #Plošča je v redu
     def __repr__(self):
-        return 'Plosca(visina = {}, sirina = {})'.format(self.visina,self.sirina)
+        return 'Plosca(visina = {}, sirina = {})'.format(self.visina,
+                                                         self.sirina)
     
 #SPUSTI KROGEC DELA ODLIČNO
     def spusti_krogec(self, sirina):
         stevilka_vrstice = self.visina - 1
-        while (stevilka_vrstice, sirina) in self.krogci_prvi_igralec or (stevilka_vrstice, sirina) in self.krogci_drugi_igralec:
+        while (stevilka_vrstice, sirina) in self.krogci_prvi_igralec\
+              or (stevilka_vrstice, sirina) in self.krogci_drugi_igralec:
                 stevilka_vrstice -= 1
                 if stevilka_vrstice < 0:
                     return False
@@ -22,7 +24,7 @@ class Plosca:
         else:
             self.krogci_drugi_igralec.append((stevilka_vrstice, sirina))
         return stevilka_vrstice
-        #NAJ ŠE PREVERI, ČE JE IGRE KONEC
+
             
 
     def __str__(self):
@@ -51,8 +53,8 @@ class Plosca:
             return 'red2'
 
 
-
-    def stiri_v_vrsto(self, element, seznam):
+#PREGLED ZA ŠTIRI V VRSTO DELA, TAKO KOT MORA
+    def pregled(self, element, seznam):
         vrstica, stolpec = element
         if element not in seznam:
             seznam.append(element)
@@ -120,9 +122,10 @@ class Plosca:
                                                                              
 #TO JE V REDU
     def konec_igre(self):
-        if len(self.krogci_prvi_igralec + self.krogci_drugi_igralec) == self.sirina * self.visina:
+        if len(self.krogci_prvi_igralec + self.krogci_drugi_igralec)\
+           == self.sirina * self.visina:
             return 1
-        elif self.stiri_v_vrsto(self.vrni()[len(self.vrni()) - 1], self.vrni()) == True:
+        elif self.pregled(self.vrni()[len(self.vrni()) - 1], self.vrni()) == True:
             return 0
         else:
             return -1
@@ -131,7 +134,7 @@ class Plosca:
 
 plosca = Plosca()
 
-        
+
 
 
 
