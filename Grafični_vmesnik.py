@@ -24,7 +24,7 @@ class Štiri_v_vrsto:
                     gumb.grid(row = vrstica, column = stolpec)
                     vrstica_gumbov.append(gumb)
             self.gumbi.append(vrstica_gumbov)
-            prikaz_plosce.grid(row = 1, column = 0, columnspan = 2)
+            prikaz_plosce.grid(row = 1, column = 0)
         
         
 
